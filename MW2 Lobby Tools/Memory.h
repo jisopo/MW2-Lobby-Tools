@@ -24,6 +24,10 @@ SOFTWARE.
 class Memory
 {
 public:
+    static void ToggleFostHost(bool state);
+    static void PatchDlcMapCheck();
+    static void ToggleDisableSpectatorKick(bool state);
+	static void DisableLobbyVac(bool state);
 	static void ToggleChopperBoxes(bool state);
 	static void ToggleThermalVision(bool state);
 	static void ToggleSpread(bool state);

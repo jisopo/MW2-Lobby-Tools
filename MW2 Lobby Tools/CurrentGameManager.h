@@ -32,6 +32,8 @@ public:
 	CurrentGameManager();
 	~CurrentGameManager();
 
+    static HMODULE hInst;
+
 	void HandleGamestate();
 	void GameTick();
 	void Advertise() const;
@@ -48,8 +50,15 @@ public:
 	void ClientDeath(int id) const;
 
 	bool ClientAlive(int id) const;
+    bool isClientWeaponBanned(int id) const;
+    void banClientWeapon(int id) const;
+    void unbanClientWeapon(int id) const;
+    void SetClientWeapon(int id, char* weapon) const;
+    //char* GetClientWeapon(int id) const;
 
 	void ClientWeaponChange(int id) const;
+    void ClientWeaponBanned(int id) const;
+    
 
 	void ClientDvars(int id) const;
 	void ClientLoadout(int id) const;
@@ -60,7 +69,8 @@ private:
 	Client **clients = new Client*[MAX_CLIENTS];
 	TeleporterManager *tpmanager = new TeleporterManager();
 	std::clock_t last_time = std::clock();
-	unsigned long interval_time = 120;
+	//unsigned long interval_time = 120;
+    unsigned long interval_time = 240;
 
 	dvar_t *cl_ingame = IW4::DVAR::FindDvar("cl_ingame");
 };

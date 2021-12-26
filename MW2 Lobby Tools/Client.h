@@ -32,6 +32,8 @@ public:
 
 	bool firstspawned = false;
 	bool alive = false;
+    bool weapon_is_banned = false;
+    char lastWeapon[50] = { 0 };
 	
 	unsigned int kills = 0;
 	unsigned int deaths = 0;

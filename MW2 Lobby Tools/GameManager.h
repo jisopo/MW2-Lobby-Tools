@@ -30,6 +30,7 @@ class GameManager
 public:
 	static CurrentGameManager *CurrentGame;
 	static void SetCurrentGameManager(CurrentGameManager *CurrentGame);
+    static std::string GetNextMapMessage(bool& isDlcMap);
 
 	enum BeepState
 	{
@@ -44,13 +45,18 @@ public:
 	static void EndGame();
 	static void PauseGame();
 
+	static void extraMatchSettings();
+
 	// TODO: implement DVAR toggle nodes in menu
 	static void OpenIW4Console();
 	static void OpenGameSetup();
 	static void GameForceStart();
 	static void ToggleForceHost();
+	static void ToggleExtraCrates();
+    static void ToggleForceStart();
 	static void TogglePrivateMatch();
 	static void ToggleMaxPlayers();
+    static void ToggleAutoHost();
 	static void ToggleFullBright();
 	static void ToggleFieldOfView();
 	static void ToggleInfiniteAmmo();
@@ -61,14 +67,29 @@ public:
 	static void SendKillstreakMessage(int killstreak, int id);
 	static void SendDeathstreakMessage(int deathstreak, int id);
 	static void DoBeep(BeepState state);
+    static void PlayActivationSound(int activated);
 
 	static bool ConsoleOpen;
+    static int chatMessagesAvailable;
+    static bool thirdPersonEnabled;
 	static bool ForceHost;
+	static bool ExtraCrates;
+    static bool UnlimitedSprint;
+	// первый матч как хост
+	static bool FirstMatch;
+    static bool ForceStart;
 	static bool PrivateMatch;
 	static bool MaxPlayers;
+    static bool CustomMapRandomGenerator;
+    static bool AutoHost;
+    static bool AutoHostActionRequired;
+    static bool CurrentTeam;
+    static bool Godmode;
 	static bool FullBright;
 	static bool FieldOfView;
 	static bool InfiniteAmmo;
+    static char nextMapName[50];
+    static HMODULE hInst;
 	static MenuEvent WeaponMode;
 };
 

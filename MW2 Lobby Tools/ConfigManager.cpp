@@ -59,7 +59,7 @@ void ConfigManager::InitWeaponList()
 	}
 }
 
-WEAPON_STATE ConfigManager::ParseWeapon(std::string weapon)
+WEAPON_STATE ConfigManager::ParseWeapon(std::string weapon, std::string& weapon_without_forbidden_modules)
 {
 	std::string delim = "_";
 	std::vector<std::string> parts;
@@ -73,23 +73,34 @@ WEAPON_STATE ConfigManager::ParseWeapon(std::string weapon)
 		end = weapon.find(delim, start);
 	}
 
-	for (unsigned int i = 0; i < parts.size(); i++)
+    weapon_without_forbidden_modules = weapon;
+
+    for (unsigned int i = 0; i < parts.size(); i++)
 	{
 		auto part = parts.at(i);
 
 		if (i == 0)
 		{
-			if (ConfigManager::IsWeaponAllowed(part))
+            if (ConfigManager::IsWeaponAllowed(part))
+            {
+                // weapon_without_forbidden_modules += part;
 				continue;
+            }
 			else
 				return ConfigManager::GetWeaponState(part);
 		}
 		else
 		{
-			if (ConfigManager::GetAttachmentStateForWeapon(parts.at(0), part) == WEAPON_DEFAULT)
+            if (ConfigManager::GetAttachmentStateForWeapon(parts.at(0), part) == WEAPON_DEFAULT)
+            {
 				continue;
-			else
+            }
+            else
+            {
+                // + 1 на символ разделителя _
+                weapon_without_forbidden_modules.erase(weapon_without_forbidden_modules.find(part), part.length() + 1);
 				return ConfigManager::GetAttachmentStateForWeapon(parts.at(0), part);
+            }
 		}
 
 	}
@@ -219,6 +230,7 @@ std::string ConfigManager::GetConfigPath()
 		auto DefChar = ' ';
 		WideCharToMultiByte(CP_ACP, 0, szPath, -1, ch, 260, &DefChar, nullptr);
 		path = std::string(ch) + "\\mw2lt.cfg";
+		//path = "D:\\Data\\Soft\\C++\\MW2-Lobby-Tools-master\\configs\\mw2lt.cfg";
 	}
 
 	return path;
@@ -314,7 +326,7 @@ void ConfigManager::CreateDefaultConfig()
 	ConfigManager::SetWeaponState("rpg", WEAPON_REPLACE);
 	ConfigManager::SetWeaponState("at4", WEAPON_REPLACE);
 	ConfigManager::SetWeaponState("m79", WEAPON_REPLACE);
-	ConfigManager::SetAttachmentStateForWeapon("glock", "akimbo", WEAPON_REPLACE);
+	//ConfigManager::SetAttachmentStateForWeapon("glock", "akimbo", WEAPON_REPLACE);
 
 	json defaultconfig = {
 		{ "admins", json::array() },

@@ -24,6 +24,7 @@ SOFTWARE.
 #include "ClientManager.h"
 
 clientinfo_t* ClientManager::ClientInfos[MAX_CLIENTS];
+char* ClientManager::ClientInfos2[MAX_CLIENTS];
 std::vector<specialclient_t*> ClientManager::specialclients;
 std::map<long long, std::string> ClientManager::bannedclients;
 
@@ -33,6 +34,14 @@ void ClientManager::InitClientInfos()
 	{
 		ClientInfos[id] = reinterpret_cast<clientinfo_t *>(static_cast<uintptr_t>(CLIENT_a) + (id * CLIENT_s));
 	}
+}
+
+void ClientManager::InitClientInfos2()
+{
+    for (auto id = 0; id < MAX_CLIENTS; id++)
+    {
+        ClientInfos2[id] = reinterpret_cast<char*>(static_cast<uintptr_t>(CLIENT_b) + (id * CLIENT_b_s));
+    }
 }
 
 void ClientManager::InitSpecialClients()
@@ -107,6 +116,11 @@ clientinfo_t* ClientManager::GetClientByName(const char* name)
 	}
 
 	return nullptr;
+}
+
+char* ClientManager::GetClientNamebyId2(int id)
+{
+    return ClientInfos2[id];
 }
 
 void ClientManager::KickIdReason(int id, std::string reason)

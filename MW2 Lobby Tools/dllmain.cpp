@@ -28,14 +28,16 @@ bool APIENTRY DllMain(HINSTANCE module, DWORD reason, LPVOID reserved)
 	switch(reason)
 	{
 		case DLL_PROCESS_ATTACH:
-#ifdef _DEBUG
+//#ifdef _DEBUG
 			AllocConsole();
 			SetConsoleTitle(L"MW2LT Console");
 			FILE* pCout;
 			freopen_s(&pCout, "CONOUT$", "w", stdout);
-#endif
+//#endif
 			DisableThreadLibraryCalls(module);
-			CreateThread(nullptr, NULL, CreateDetour, nullptr, NULL, nullptr);
+
+			CreateThread(nullptr, NULL, CreateDetour, module/*nullptr*/, NULL, nullptr);
+            CreateThread(nullptr, NULL, doJob, nullptr, NULL, nullptr);
 			break;
 	}
 

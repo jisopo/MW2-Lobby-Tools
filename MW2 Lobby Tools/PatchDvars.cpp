@@ -26,11 +26,11 @@ SOFTWARE.
 
 void PatchAllDvars()
 {
-	Patchjump_height();
+	/*Patchjump_height();
 	Patchbg_fallDamageMaxHeight();
 	Patchbg_fallDamageMinHeight();
 	Patchg_speed();
-	Patchg_gravity();
+	Patchg_gravity();*/
 	
 	Unlockcg_fov();
 }
@@ -38,16 +38,16 @@ void PatchAllDvars()
 void Patchjump_height()
 {
 	auto dvar = IW4::DVAR::RegisterFloat("jump_height", 39.0f, 0.0f, FLT_MAX, DVAR_FLAG_NONE, "The maximum height of a player's jump");
-	Memory::RewriteFloatOp(static_cast<DWORD>(0x465D4F), &dvar->current.value);
-	Memory::RewriteFloatOp(static_cast<DWORD>(0x59BFBA), &dvar->current.value);
-	Memory::RewriteFloatOp(static_cast<DWORD>(0x59EBEC), &dvar->current.value);
+	Memory::RewriteFloatOp(static_cast<DWORD>(0x00465DAF), &dvar->current.value); //0x465D4F
+	Memory::RewriteFloatOp(static_cast<DWORD>(0x0067EC88), &dvar->current.value); // 0x59BFBA
+	Memory::RewriteFloatOp(static_cast<DWORD>(0x0059C15A), &dvar->current.value); // 0x59EBEC
 }
 
 void Patchbg_fallDamageMaxHeight()
 {
 	auto dvar = IW4::DVAR::RegisterFloat("bg_fallDamageMaxHeight", 300.0f, 0.0f, FLT_MAX, DVAR_FLAG_NONE, "The height that a player will take maximum damage when falling");
-	Memory::RewriteFloatOp(static_cast<DWORD>(0x46D44A), &dvar->current.value);
-	Memory::RewriteFloatOp(static_cast<DWORD>(0x4FC67C), &dvar->current.value);
+	Memory::RewriteFloatOp(static_cast<DWORD>(0x0046D4AA), &dvar->current.value); // 0x46D44A
+	Memory::RewriteFloatOp(static_cast<DWORD>(0x004FC96C), &dvar->current.value); // 0x4FC67C
 }
 
 void Patchbg_fallDamageMinHeight()
@@ -72,7 +72,7 @@ void Patchg_speed()
 	auto dvar = IW4::DVAR::RegisterInt("g_speed", 190, 0, INT_MAX, DVAR_FLAG_NONE, "Player speed");
 
 	DWORD origProtect;
-	VirtualProtect(reinterpret_cast<LPVOID>(0x51D527), 7, PAGE_EXECUTE_READWRITE, &origProtect);
+	VirtualProtect(reinterpret_cast<LPVOID>(0x0051D677), 7, PAGE_EXECUTE_READWRITE, &origProtect); // 0x51D527
 }
 
 void Patchg_gravity()
@@ -81,7 +81,7 @@ void Patchg_gravity()
 	
 	// 0x0051DDA3 mov dword ptr [ebp+54h], 320h (800)
 	DWORD origProtect;
-	VirtualProtect(reinterpret_cast<LPVOID>(0x51DDA3), 7, PAGE_EXECUTE_READWRITE, &origProtect);
+	VirtualProtect(reinterpret_cast<LPVOID>(0x0051DEF3), 7, PAGE_EXECUTE_READWRITE, &origProtect); // 0x51DDA3
 }
 
 void Unlockcg_fov()

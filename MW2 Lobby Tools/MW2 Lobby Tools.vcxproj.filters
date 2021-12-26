@@ -273,6 +273,12 @@
     <ClInclude Include="PerkManager.h">
       <Filter>Source Files\managers\PerkManager</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooking.h">
+      <Filter>Source Files\patches</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -389,6 +395,9 @@
     <ClCompile Include="PerkManager.cpp">
       <Filter>Source Files\managers\PerkManager</Filter>
     </ClCompile>
+    <ClCompile Include="Hooking.cpp">
+      <Filter>Source Files\patches</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="detours.lib">
@@ -405,5 +414,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="LICENSE.MD" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\resources\activated.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="..\resources\deactivated.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>

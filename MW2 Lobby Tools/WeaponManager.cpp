@@ -32,9 +32,13 @@ void WeaponManager::GiveWeapon(int id, int weaponid, int camo, int ammo, bool ak
 
 	IW4::G::GivePlayerWeapon(playerstate, weaponid, camo, akimbo ? 1 : 0);
 	IW4::MISC::Add_Ammo(gentity, weaponid, 0, ammo, 1);
+    IW4::MISC::Add_Ammo(gentity, weaponid, 0, ammo, 1);
+    IW4::MISC::Add_Ammo(gentity, weaponid, 0, ammo, 1);
 
-	if (switchto)
+    if (switchto)
+    {
 		SelectWeapon(id, weaponid);
+    }
 }
 
 void WeaponManager::GiveWeapon(int id, char * weapon, int camo, int ammo, bool akimbo, bool switchto)

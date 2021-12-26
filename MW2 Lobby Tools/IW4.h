@@ -48,6 +48,12 @@ namespace IW4
 		typedef void(__cdecl* UserinfoChanged_t)(void *client_s);
 		static UserinfoChanged_t UserinfoChanged;
 
+        typedef void(__cdecl* ClientSpawn_t)(gentity_t *gEnt, const float* spawn_origin, const float* spawn_angles);
+        static ClientSpawn_t ClientSpawn;
+
+        typedef void(__cdecl* ClientEndFrame_t)(gentity_t *gEnt);
+        static ClientEndFrame_t ClientEndFrame;
+
 		typedef void(__cdecl* DropClient_t)(void *client_s, const char *reason, BOOL tellThem);
 		static DropClient_t DropClient;
 
@@ -395,6 +401,9 @@ namespace IW4
 
 		typedef void(__cdecl* ClearOutParams_t)();
 		static ClearOutParams_t ClearOutParams;
+        
+        typedef void(__cdecl* GScr_SetPlayerData_t)(int ClientIndex);
+        static GScr_SetPlayerData_t GScr_SetPlayerData;
 
 		typedef unsigned int(__cdecl *GetNumParam_t)();
 		static GetNumParam_t GetNumParam;
@@ -462,6 +471,18 @@ namespace IW4
 	public:
 		typedef void(__cdecl* CreateConsole_t)();
 		static CreateConsole_t CreateConsole;
+
+        typedef int(__cdecl* HostEndedGame_t)(void *command, unsigned int something, DWORD data, void* addr);
+        static HostEndedGame_t HostEndedGame;
+
+        typedef void(__cdecl* EndMatch_t)();
+        static EndMatch_t EndMatch;
+
+        typedef void(__cdecl* UIMapSet_t)(const char* value);
+        static UIMapSet_t UIMapSet;
+
+        typedef void(__cdecl* UI_SetMap_t)(void* value, char* src);
+        static UI_SetMap_t UI_SetMap;
 
 		typedef void(__cdecl* player_die_t)(void *gentity_s_self, void *gentity_s_inflictor, void *gentity_s_attacker, int damage, int meansOfDeath, int iWeapon, const float *vDir, int hitLocation_t_hitLoc, int psTimeOffset);
 		static player_die_t player_die;

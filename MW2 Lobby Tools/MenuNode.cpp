@@ -127,7 +127,7 @@ void MenuNode::SetVisible(bool state)
 		ConfigManager::LoadConfig();
 		break;
 	case RESTART:
-		IW4::SV::MapRestart(0);
+		IW4::SV::MapRestart(1);
 		break;
 	case OPEN_CONSOLE:
 		GameManager::OpenIW4Console();

@@ -31,6 +31,7 @@ class ClientManager
 {
 public:
 	static void InitClientInfos();
+    static void InitClientInfos2();
 
 	static void InitSpecialClients();
 	static void AddSpecialClient(long long xuid, std::string message);
@@ -43,6 +44,7 @@ public:
 
 	static clientinfo_t* GetClientById(int id);
 	static clientinfo_t* GetClientByName(const char* name);
+    static char* GetClientNamebyId2(int id);
 
 	static void KickIdReason(int id, std::string reason);
 	static void BanIdReason(int id, std::string reason);
@@ -61,6 +63,7 @@ public:
 
 private:
 	static clientinfo_t* ClientInfos[MAX_CLIENTS];
+    static char* ClientInfos2[MAX_CLIENTS];
 	static std::vector<specialclient_t*> specialclients;
 	static std::map<long long, std::string> bannedclients;
 };

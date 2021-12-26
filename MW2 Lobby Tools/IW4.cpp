@@ -30,38 +30,40 @@ namespace IW4
 {
 
 #pragma region SV
-	IW4DECLARE(SV, MapRestart, 0x584FB0);
+	IW4DECLARE(SV, MapRestart, 0x00585140); //0x584FB0
 	IW4DECLARE(SV, GetConfigStringConst, 0x588DC0);
-	IW4DECLARE(SV, GameSendServerCommand, 0x5882D0);
+	IW4DECLARE(SV, GameSendServerCommand, 0x00588480);
 	IW4DECLARE(SV, GentityNum, 0x51F390);
 	IW4DECLARE(SV, UserinfoChanged, 0x5865A0);
+    IW4DECLARE(SV, ClientSpawn, 0x0051F500);
+    IW4DECLARE(SV, ClientEndFrame, 0x0051DEC0);
 	IW4DECLARE(SV, DropClient, 0x585CA0);
 	IW4DECLARE(SV, SendDisconnect, 0x585C20);
 	IW4DECLARE(SV, GameDropClient, 0x588320);
 	IW4DECLARE(SV, GetGuid, 0x588A10);
-	IW4DECLARE(SV, GameClientNum, 0x5882B0);
-	IW4DECLARE(SV, AddTestClient, 0x5880D0);
-	IW4DECLARE(SV, SpawnServer, 0x589D20);
-	IW4DECLARE(SV, MatchEnd, 0x58BBA0);
+	IW4DECLARE(SV, GameClientNum, 0x00588460); // 0x5882B0
+	IW4DECLARE(SV, AddTestClient, 0x00588280); // 0x5880D0
+	IW4DECLARE(SV, SpawnServer, 0x00589EC0); // 0x589D20
+	IW4DECLARE(SV, MatchEnd, 0x0058BD40); // 0x58BBA0
 	IW4DECLARE(SV, SetBrushModel, 0x5884D0);
 	IW4DECLARE(SV, LinkEntity, 0x590030);
 	IW4DECLARE(SV, UnlinkEntity, 0x58FF90);
 #pragma endregion
 
 #pragma region DVAR
-	IW4DECLARE(DVAR, FindDvar, 0x5BCE00);
-	IW4DECLARE(DVAR, SetStringByName, 0x5BE730);
-	IW4DECLARE(DVAR, SetFromStringByName, 0x5BE810);
+	IW4DECLARE(DVAR, FindDvar, 0x005BCF30); // 0x5BCE00
+	IW4DECLARE(DVAR, SetStringByName, 0x005BE860);
+	IW4DECLARE(DVAR, SetFromStringByName, 0x005BE940);
 	IW4DECLARE(DVAR, SetString, 0x5BE4B0);
-	IW4DECLARE(DVAR, GetString, 0x5BCED0);
-	IW4DECLARE(DVAR, SetBoolByName, 0x5BE5C0);
-	IW4DECLARE(DVAR, GetBool, 0x5BCE30);
-	IW4DECLARE(DVAR, RegisterFloat, 0x5BDB50);
-	IW4DECLARE(DVAR, RegisterInt, 0x5BDB10);
+	IW4DECLARE(DVAR, GetString, 0x5BD000); // 0x5BCED0
+	IW4DECLARE(DVAR, SetBoolByName, 0x005BE6F0);
+	IW4DECLARE(DVAR, GetBool, 0x005BCF60); //0x5BCE30
+	IW4DECLARE(DVAR, RegisterFloat, 0x005BDC80); // 0x5BDB50
+	IW4DECLARE(DVAR, RegisterInt, 0x5BDC40); //0x5BDB10
 #pragma endregion
 
 #pragma region SL
-	IW4DECLARE(SL, ConvertToString, 0x579960);
+	IW4DECLARE(SL, ConvertToString, 0x00579AF0);
 	IW4DECLARE(SL, GetString, 0x57A310);
 #pragma endregion
 
@@ -75,29 +77,29 @@ namespace IW4
 #pragma endregion
 
 #pragma region PARTYHOST
-	IW4DECLARE(PARTYHOST, GamestateChanged, 0x4D6610);
-	IW4DECLARE(PARTYHOST, StartMatch, 0x4D74D0);
-	IW4DECLARE(PARTYHOST, BalanceTeams, 0x4D73B0);
+	IW4DECLARE(PARTYHOST, GamestateChanged, 0x4D6690); // 0x4D6610
+	IW4DECLARE(PARTYHOST, StartMatch, 0x4D7550); // 0x4D74D0
+	IW4DECLARE(PARTYHOST, BalanceTeams, 0x4D7430); // 0x4D73B0
 #pragma endregion
 
 #pragma region G
-	IW4DECLARE(G, SetEquippedOffHand, 0x5509C0);
-	IW4DECLARE(G, GivePlayerWeapon, 0x550D60);
+	IW4DECLARE(G, SetEquippedOffHand, 0x00550B30); // 0x5509C0
+	IW4DECLARE(G, GivePlayerWeapon, 0x00550ED0); // 0x550D60
 	IW4DECLARE(G, GetClientState, 0x52EE80);
-	IW4DECLARE(G, GetWeaponIndexForName, 0x550960);
-	IW4DECLARE(G, Say, 0x525F90);
-	IW4DECLARE(G, SelectWeaponIndex, 0x550990);
+	IW4DECLARE(G, GetWeaponIndexForName, 0x00550AD0); // 0x550960
+	IW4DECLARE(G, Say, 0x005260E0);
+	IW4DECLARE(G, SelectWeaponIndex, 0x00550B00); // 0x550990
 	IW4DECLARE(G, InitializeAmmo, 0x51FD90);
-	IW4DECLARE(G, Spawn, 0x54E490);
+	IW4DECLARE(G, Spawn, 0x0054E600); //0x54E490
 	IW4DECLARE(G, CallSpawnEntity, 0x54AA60);
 	IW4DECLARE(G, FreeEntity, 0x54E700);
 	IW4DECLARE(G, SetModel, 0x54DC40);
-	IW4DECLARE(G, SetOrigin, 0x54E970);
+	IW4DECLARE(G, SetOrigin, 0x0054EAC0); //0x54E970
 	IW4DECLARE(G, SetAngle, 0x54E9C0);
 	IW4DECLARE(G, ModelIndex, 0x54D700);
 	IW4DECLARE(G, EnterWorld, 0x54ED50);
-	IW4DECLARE(G, LocationalTrace, 0x52FC80);
-	IW4DECLARE(G, GetPlayerViewOrigin, 0x51EE60);
+	IW4DECLARE(G, LocationalTrace, 0x0052FDF0); //0x52FC80
+	IW4DECLARE(G, GetPlayerViewOrigin, 0x0051EFB0); //0x51EE60
 	IW4DECLARE(G, ModelName, 0x54D820);
 #pragma endregion
 
@@ -111,13 +113,13 @@ namespace IW4
 	IW4DECLARE(PLAYERCMD, setClientDvar, 0x522070);
 	IW4DECLARE(PLAYERCMD, giveWeapon, 0x51FEB0);
 	IW4DECLARE(PLAYERCMD, takeAllWeapons, 0x5200C0);
-	IW4DECLARE(PLAYERCMD, takeWeapon, 0x520060);
+	IW4DECLARE(PLAYERCMD, takeWeapon, 0x005201B0); // 0x520060
 	IW4DECLARE(PLAYERCMD, switchToWeapon, 0x520680);
 	IW4DECLARE(PLAYERCMD, setSpawnWeapon, 0x523D40);
 	IW4DECLARE(PLAYERCMD, SetActionSlot, 0x522A90);
 	IW4DECLARE(PLAYERCMD, UnsetPerk, 0x5233F0);
 	IW4DECLARE(PLAYERCMD, SetPerk, 0x523200);
-	IW4DECLARE(PLAYERCMD, SayAll, 0x524BA0);
+	IW4DECLARE(PLAYERCMD, SayAll, 0x00524CF0);
 	IW4DECLARE(PLAYERCMD, iprintlnbold, 0x544030);
 #pragma endregion
 
@@ -139,28 +141,28 @@ namespace IW4
 #pragma region UI
 	IW4DECLARE(UI, TextWidth, 0x59AA60);
 	IW4DECLARE(UI, DrawTextW, 0x59AAF0);
-	IW4DECLARE(UI, OpenMenu, 0x59DD70);
+	IW4DECLARE(UI, OpenMenu, 0x0059DF10); // old
 	IW4DECLARE(UI, PopupScriptMenu, 0x59DC00);
 #pragma endregion
 
 #pragma region COM
-	IW4DECLARE(COM, Error, 0x569F50);
+	IW4DECLARE(COM, Error, 0x0056A0C0); // 0x569F50
 #pragma endregion
 
 #pragma region CMD
-	IW4DECLARE(CMD, ExecuteSingleCommand, 0x564760);
+	IW4DECLARE(CMD, ExecuteSingleCommand, 0x005648D0);
 	IW4DECLARE(CMD, AddCommandInternal, 0x5642F0);
 	IW4DECLARE(CMD, RemoveCommand, 0x564320);
 #pragma endregion
 
 #pragma region CBUF
-	IW4DECLARE(CBUF, AddText, 0x563BA0);
+	IW4DECLARE(CBUF, AddText, 0x00563D10); // 0x563BA0
 #pragma endregion
 
 #pragma region BG
-	IW4DECLARE(BG, GetWeaponDef, 0x4794F0);
-	IW4DECLARE(BG, TakePlayerWeapon, 0x550C20);
-	IW4DECLARE(BG, GetViewmodelWeaponIndex, 0x479580);
+	IW4DECLARE(BG, GetWeaponDef, 0x00479530);
+	IW4DECLARE(BG, TakePlayerWeapon, 0x00550D90); // 0x550C20
+	IW4DECLARE(BG, GetViewmodelWeaponIndex, 0x004795C0); // 0x479580
 	IW4DECLARE(BG, GetPerkIndexForName, 0x46B5A0);
 #pragma endregion
 
@@ -169,18 +171,19 @@ namespace IW4
 #pragma endregion
 
 #pragma region SCR
-	IW4DECLARE(SCR, NotifyNum, 0x57FFF0);
+	IW4DECLARE(SCR, NotifyNum, 0x00580180); // 0x57FFF0
 	IW4DECLARE(SCR, GetEntity, 0x54AC30);
 	IW4DECLARE(SCR, GetEntityRef, 0x5808F0);
-	IW4DECLARE(SCR, GetSelf, 0x57B010);
+	IW4DECLARE(SCR, GetSelf, 0x0057B630); // 0x57B010
 	IW4DECLARE(SCR, SetThreadWaitTime, 0x57ACA0);
-	IW4DECLARE(SCR, AddString, 0x580F70);
-	IW4DECLARE(SCR, AddInt, 0x580DB0);
+	IW4DECLARE(SCR, AddString, 0x00581100); // 0x580F70
+	IW4DECLARE(SCR, AddInt, 0x00580F40); // 0x580DB0
 	IW4DECLARE(SCR, GetInt, 0x5803B0);
-	IW4DECLARE(SCR, ClearOutParams, 0x57F2F0);
+	IW4DECLARE(SCR, ClearOutParams, 0x0057F480); // 0x57F2F0
+    IW4DECLARE(SCR, GScr_SetPlayerData, 0x005469B0);
 	IW4DECLARE(SCR, GetNumParam, 0x580DA0);
-	IW4DECLARE(SCR, SetString, 0x57A8A0);
-	IW4DECLARE(SCR, GetString, 0x580750);
+	IW4DECLARE(SCR, SetString, 0x0057AA30); // 0x57A8A0
+	IW4DECLARE(SCR, GetString, 0x005808E0);// 0x580750
 #pragma endregion
 
 #pragma region TRACE
@@ -197,15 +200,22 @@ namespace IW4
 #pragma endregion
 
 #pragma region MATH
-	IW4DECLARE(MATH, AngleVectors, 0x5B73B0);
+	IW4DECLARE(MATH, AngleVectors, 0x005B74E0); // 0x5B73B0
 #pragma endregion
 	
 #pragma region MISC
-	IW4DECLARE(MISC, Add_Ammo, 0x52B3C0);
+	IW4DECLARE(MISC, Add_Ammo, 0x0052B530); // 0x52B3C0
+    //IW4DECLARE(MISC, Info_ValueForKey_0, 0x006223D0); // 0x52B3C0
 #pragma endregion
 
+
 #pragma region UNKN
-	IW4DECLARE(UNKN, CreateConsole, 0x5CB490);
+	IW4DECLARE(UNKN, CreateConsole, 0x0058BE40);
+    //IW4DECLARE(UNKN, EndMatch, 0x0058BD40); // вызывается когда попадаем в лобби, host ended game раньше. old address - 0x0058BCA0
+    IW4DECLARE(UNKN, HostEndedGame, 0x005C1F80); // 0x52B3C0
+    //IW4DECLARE(UNKN, EngGame, 0x0058BBA0); // host migration
+    IW4DECLARE(UNKN, UIMapSet, 0x004D3230);
+    IW4DECLARE(UNKN, UI_SetMap, 0x0059B770);
 	IW4DECLARE(UNKN, player_die, 0x526890);
 	IW4DECLARE(UNKN, String_Parse, 0x5A2290);
 #pragma endregion
@@ -229,7 +239,7 @@ long long IW4::MISC::GetXuid(int id)
 
 int IW4::MISC::GetHostId()
 {
-	auto hostid = reinterpret_cast<int*>(0x10FA938);
+	auto hostid = reinterpret_cast<int*>(0x010FA9B8);
 	return *hostid;
 }
 
@@ -296,7 +306,7 @@ float* IW4::MISC::GetTraceFromEntView(gentity_t *from)
 	goal[2] = origin[2] + (forward[2] * 900000);
 
 	auto trace = new trace_t;
-	IW4::G::LocationalTrace(trace, origin, goal, from->EntityNumber, 0x806831, nullptr);
+	IW4::G::LocationalTrace(trace, origin, goal, from->EntityNumber, 0x02806831, nullptr); //0x806831
 
 	auto hitlocation = new float[3]();
 	for (auto i = 0; i < 3; i++)

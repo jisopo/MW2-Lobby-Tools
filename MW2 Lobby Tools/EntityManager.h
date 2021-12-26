@@ -54,11 +54,19 @@ public:
 	};
 
 	static gentity_t *GetGEntity(int id);
+    static void *GetPlayerstate(int id);
 	static gentity_t *PlayerStateToGEntity(playerstate_t *ps);
 
 	static gentity_t *SpawnEntity(modelclass c, std::string model, vec3_t origin, vec3_t angle);
 
 	static void SetGodMode(int id, godmode mode);
+    static void DisableWeapon(int id);
+    static void SetNoClipMode(int id, uint16_t value);
+    static void SetPlayerRank(int id, int rank);
+    static void SetPlayerPrestige(int id, int prestige);
+    static void PlayerUnlockAll(int id);
+    static int chatMessagesAvailable;
+    static bool thirdPersonEnabled;
 
 private:
 	static std::string modelclasses[];

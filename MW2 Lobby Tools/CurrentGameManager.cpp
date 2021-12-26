@@ -22,6 +22,7 @@ SOFTWARE.
 
 #include "stdafx.h"
 #include "CurrentGameManager.h"
+#include "HookManager.h"
 
 #include "GameManager.h"
 #include "WeaponManager.h"
@@ -73,19 +74,25 @@ void CurrentGameManager::GameTick()
 
 void CurrentGameManager::Advertise() const
 {
-	IW4::MISC::SendAllClientsChatMessage(IW4::MISC::GetHostId(), "^7Hosted with ^2MW2 Lobby Tools " MW2LTVERSION "^7 by ^2Scoud");
-	IW4::MISC::SendAllClientsChatMessage(IW4::MISC::GetHostId(), "^7Download @ ^2scoudem.github.io^7");
-	IW4::MISC::SendAllClientsChatMessage(IW4::MISC::GetHostId(), "^7Type '^2/help^7' to view available commands");
+    /*if (GameManager::thirdPersonEnabled)
+    {
+        IW4::MISC::SendAllClientsChatMessage(IW4::MISC::GetHostId(), "switch view(chat command no quotes) - '/view^1f^7' and '/view^1t^7'");
+        IW4::MISC::SendAllClientsChatMessage(IW4::MISC::GetHostId(), "переключить вид(ввести в чате без кавычек) - '/view^1f^7' и '/view^1t^7'");
+    }*/
+
+	//IW4::MISC::SendAllClientsChatMessage(IW4::MISC::GetHostId(), "^7Hosted with ^2MW2 Lobby Tools " MW2LTVERSION "^7 by ^2Scoud");
+	//IW4::MISC::SendAllClientsChatMessage(IW4::MISC::GetHostId(), "^7Download @ ^2scoudem.github.io^7");
+	//IW4::MISC::SendAllClientsChatMessage(IW4::MISC::GetHostId(), "^7Type '^2/help^7' to view available commands");
 }
 
 void CurrentGameManager::StartGame()
 {
-	Logger::Log("Game has started");
+	//Logger::Log("Game has started");
 
 	this->gameactive = true;
 
-	GameManager::SetTeamNameAllies("^2MW2LT^7 Allies");
-	GameManager::SetTeamNameAxis("^2MW2LT^7 Axis");
+	//GameManager::SetTeamNameAllies("^2MW2LT^7 Allies");
+	//GameManager::SetTeamNameAxis("^2MW2LT^7 Axis");
 
 	// mp_afghan
 	//tpmanager->RemoveAllTeleporters();
@@ -100,7 +107,7 @@ void CurrentGameManager::StartGame()
 
 void CurrentGameManager::EndGame()
 {
-	Logger::Log("Game has finished");
+	//Logger::Log("Game has finished");
 
 	this->gameactive = false;
 
@@ -115,7 +122,7 @@ void CurrentGameManager::EndGame()
 
 	tpmanager->RemoveAllTeleporters();
 
-	ConfigManager::SaveConfig();
+	//ConfigManager::SaveConfig();
 }
 
 void CurrentGameManager::ClientConnect(int id) const
@@ -126,17 +133,39 @@ void CurrentGameManager::ClientConnect(int id) const
 	{
 		if (this->clients[id] == nullptr)
 		{
-			printf("Client %d connected with xuid %lld\n", id, IW4::MISC::GetXuid(id));
+			//printf("Client %d connected with xuid %lld\n", id, IW4::MISC::GetXuid(id));
 			this->clients[id] = new Client(id);
 		}
 
+		/*IW4::MISC::SetClientDvar(id, "cl_maxpackets", "100");
+		IW4::MISC::SetClientDvar(id, "snaps", "30");
+		IW4::MISC::SetClientDvar(id, "cg_chatHeight", "8");
+		IW4::MISC::SetClientDvar(id, "cg_hudChatPosition", "5 204");
+		IW4::MISC::SetClientDvar(id, "cg_hudChatIntermissionPosition", "5 110");
+		IW4::MISC::SetClientDvar(id, "cg_ScoresPing_MaxBars", "10");*/
+		//IW4::MISC::SetClientDvar(id, "cg_fov", "80");
+        //IW4::MISC::SetClientDvar(id, "cg_scoreboardpingtext", "1")
+
+        if (id == IW4::MISC::GetHostId())
+        {
+			// добавляем пинг в таблицу только для хоста
+            IW4::MISC::SetClientDvar(id, "cg_scoreboardpingtext", "1");
+
+			IW4::MISC::SetClientDvar(id, "cg_fov", "80");
+			IW4::MISC::SetClientDvar(id, "cg_fovScale", "1");
+        }
+
+		// восстанавливаем двары чата на стандартные после модифицированных серверов
 		IW4::MISC::SetClientDvar(id, "cl_maxpackets", "100");
 		IW4::MISC::SetClientDvar(id, "snaps", "30");
 		IW4::MISC::SetClientDvar(id, "cg_chatHeight", "8");
 		IW4::MISC::SetClientDvar(id, "cg_hudChatPosition", "5 204");
 		IW4::MISC::SetClientDvar(id, "cg_hudChatIntermissionPosition", "5 110");
 		IW4::MISC::SetClientDvar(id, "cg_ScoresPing_MaxBars", "10");
-		IW4::MISC::SetClientDvar(id, "cg_fov", "80");
+		// TODO: выставлять цвета от убийств в чате стандартный
+
+        // TODO: выставлять значения из чата по умолчанию
+        
 
 		ClientManager::CheckAllClients();
 	}
@@ -176,20 +205,25 @@ void CurrentGameManager::ClientSpawn(int id) const
 
 		if (!client->firstspawned)
 		{
-			auto xuid = IW4::MISC::GetXuid(id);
+			/*auto xuid = IW4::MISC::GetXuid(id);
 			if (ClientManager::IsSpecialClient(xuid))
-				IW4::MISC::SendAllClientsMessageCenter(ClientManager::GetSpecialClient(xuid)->message);
+				IW4::MISC::SendAllClientsMessageCenter(ClientManager::GetSpecialClient(xuid)->message);*/
 
 			// TODO: generate a temp entity and use a custom name for chat messages (experiment).
-			GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7This lobby is running ^2MW2 Lobby Tools ^7v" MW2LTVERSION "^7 (by ^2Scoud^7).");
-			GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7This server is in ^180^7 fov mode.");
+			//GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7This lobby is running ^2MW2 Lobby Tools ^7v" MW2LTVERSION "^7 (by ^2Scoud^7).");
+			//GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7This server is in ^180^7 fov mode.");
 		}
+        else
+        {
+            
+        }
 
 		client->Spawn();
 
-		this->ClientDvars(id);
+		//this->ClientDvars(id);
 		this->ClientWeaponChange(id);
-		this->ClientLoadout(id);
+        this->ClientWeaponBanned(id);
+		//this->ClientLoadout(id);
 		this->ClientPunish(id);
 
 		//PerkManager::UnsetPerk(id, "specialty_pistoldeath"); // last stand
@@ -197,7 +231,10 @@ void CurrentGameManager::ClientSpawn(int id) const
 		//PerkManager::UnsetPerk(id, "specialty_grenadepulldeath"); // martyrdom
 		//PerkManager::UnsetPerk(id, "specialty_finalstand"); // finalstand
 	}
-	else printf("WARNING: client id %d is nullptr ClientSpawn\n", id);
+	else
+	{
+		//printf("WARNING: client id %d is nullptr ClientSpawn\n", id);
+	}
 }
 
 void CurrentGameManager::ClientKill(int id) const
@@ -239,6 +276,90 @@ void CurrentGameManager::ClientDeath(int id) const
 	else printf("WARNING: invalid id %d for ClientDeath\n", id);
 }
 
+/*char* CurrentGameManager::GetClientWeapon(int id) const
+{
+    if (!gameactive) return "";
+
+    if (VALIDID(id))
+    {
+        auto client = this->clients[id];
+        if (client)
+        {
+            return &client->lastWeapon[0];
+        }
+        else
+        {
+            printf("WARNING: no client for id %d in ClientAlive\n", id);
+            return "";
+        }
+    }
+}*/
+
+void CurrentGameManager::SetClientWeapon(int id, char* weapon) const
+{
+    if (!gameactive) return;
+
+    if (VALIDID(id))
+    {
+        auto client = this->clients[id];
+        if (client)
+        {
+            strcpy(client->lastWeapon, weapon);
+            return;
+        }
+        else
+        {
+            //printf("WARNING: no client for id %d in ClientAlive\n", id);
+            return;
+        }
+    }
+}
+
+void CurrentGameManager::banClientWeapon(int id) const
+{
+    if (!gameactive) return;
+
+    if (VALIDID(id))
+    {
+        auto client = this->clients[id];
+        if (client)
+        {
+            client->weapon_is_banned = true;
+        }
+        else
+        {
+            //printf("WARNING: no client for id %d in ClientAlive\n", id);
+            goto fail;
+        }
+    }
+
+fail:
+    return;
+}
+
+bool CurrentGameManager::isClientWeaponBanned(int id) const
+{
+    if (!gameactive) return false;
+
+    if (VALIDID(id))
+    {
+        auto client = this->clients[id];
+        if (client)
+        {
+            return client->weapon_is_banned;
+        }
+        else
+        {
+            //printf("WARNING: no client for id %d in ClientAlive\n", id);
+            goto fail;
+        }
+    }
+    else printf("WARNING: invalid id %d for ClientAlive\n", id);
+
+fail:
+    return false;
+}
+
 bool CurrentGameManager::ClientAlive(int id) const
 {
 	if (!gameactive) return false;
@@ -252,7 +373,7 @@ bool CurrentGameManager::ClientAlive(int id) const
 		}
 		else
 		{
-			printf("WARNING: no client for id %d in ClientAlive\n", id);
+			//printf("WARNING: no client for id %d in ClientAlive\n", id);
 			goto fail;
 		}
 	}
@@ -260,6 +381,20 @@ bool CurrentGameManager::ClientAlive(int id) const
 
 fail:
 	return false;
+}
+
+void CurrentGameManager::ClientWeaponBanned(int id) const
+{
+    if (!gameactive) return;
+
+    // TODO: check if switched weapon is the replacement weapon, if it is do nothing
+
+    if (!this->ClientAlive(id)) return;
+
+    if (this->isClientWeaponBanned(id))
+    {
+        EntityManager::DisableWeapon(id);
+    }
 }
 
 void CurrentGameManager::ClientWeaponChange(int id) const
@@ -271,7 +406,7 @@ void CurrentGameManager::ClientWeaponChange(int id) const
 	if (!this->ClientAlive(id)) return;
 
 	auto weapon = static_cast<char*>(IW4::BG::GetWeaponDef(IW4::BG::GetViewmodelWeaponIndex(IW4::SV::GameClientNum(id))));
-	if (strcmp(weapon, "deserteagle_mp") == 0)
+	/*if (strcmp(weapon, "deserteagle_mp") == 0)
 	{
 		WeaponManager::RemoveWeapon(id, weapon);
 		WeaponManager::GiveWeapon(id, "deserteaglegold_mp", 0, 180, 0, true);
@@ -287,29 +422,121 @@ void CurrentGameManager::ClientWeaponChange(int id) const
 			GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7^1Brrrrrrrrrrrrt^7!");
 		}
 		return;
-	}
+	}*/
 
-	auto state = ConfigManager::ParseWeapon(weapon);
+    std::string weapons_without_attachments;
+    auto state = ConfigManager::ParseWeapon(weapon, weapons_without_attachments);
+    
 	switch (state)
 	{
 	case WEAPON_DEFAULT:
 		break;
 	case WEAPON_STRIP:
-		IW4::SCR::AddString(weapon);
+    {
+		/*IW4::SCR::AddString(weapon);
 		IW4::MISC::SetNumParam(1);
 		IW4::PLAYERCMD::takeWeapon(id);
-		IW4::SCR::ClearOutParams();
-		GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7your active weapon is ^1not^7 allowed and was ^2removed^7!");
+		IW4::SCR::ClearOutParams();*/
+        WeaponManager::RemoveWeapon(id, weapon);
+        //IW4::SCR::ClearOutParams();
+        // this->SetClientWeapon(id, (char*)weapons_without_attachments.c_str());
+        void* extra_data = malloc(weapons_without_attachments.length() + 1);
+        memcpy(extra_data, weapons_without_attachments.c_str(), weapons_without_attachments.length() + 1);
+        CustomEventManager::PushCustomEvent(C_TYPE_DELAYED, C_EVENT_GIVE_WEAPON, INVALID_ID, id, 15, extra_data);
+        // WeaponManager::GiveWeapon(id, (char*)weapons_without_attachments.c_str(), 3, 30, 0, true);
+        /*while (true)
+        {
+            std::string test;
+            char* new_weapon = static_cast<char*>(IW4::BG::GetWeaponDef(IW4::BG::GetViewmodelWeaponIndex(IW4::SV::GameClientNum(id))));
+            auto new_state = ConfigManager::ParseWeapon(new_weapon, test);
+            if (new_state == WEAPON_INVALID)
+            {
+                //WeaponManager::GiveWeapon(id, (char*)weapons_without_attachments.c_str(), 3, 30, 0, true);
+                WeaponManager::SelectWeapon(id, IW4::G::GetWeaponIndexForName(weapons_without_attachments.c_str()));
+                //continue;
+            }
+            else
+            {
+                break;
+            }
+            Sleep(100);
+        }*/
+        /*while (true)
+        {
+            std::string test;
+            char* new_weapon = static_cast<char*>(IW4::BG::GetWeaponDef(IW4::BG::GetViewmodelWeaponIndex(IW4::SV::GameClientNum(id))));
+            auto new_state = ConfigManager::ParseWeapon(new_weapon, test);
+            if (new_state == WEAPON_INVALID)
+            {
+                WeaponManager::GiveWeapon(id, (char*)weapons_without_attachments.c_str(), 3, 30, 0, true);
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }*/
+        //WeaponManager::GiveWeapon(id, weaponid, camo, ammo, akimbo, switchto);
+		//GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7your active weapon is ^1not^7 allowed and was ^2removed^7!");
+    }
 		break;
 	case WEAPON_REPLACE:
+    {
 		WeaponManager::RemoveWeapon(id, weapon);
-		WeaponManager::GiveWeapon(id, "fn2000_mp", 8, 30, 0, true);
-		GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7your active weapon is ^1not^7 allowed and was ^2replaced^7!");
+        //IW4::SCR::ClearOutParams();
+		// WeaponManager::GiveWeapon(id, "fn2000_mp", 3, 30, 0, true);
+        //this->SetClientWeapon(id, "fn2000_mp");
+        //char* extra_data = "fn2000_mp";
+        void* extra_data = malloc(50);
+        memcpy(extra_data, "fn2000_mp\0", 10);
+		// stinger
+		// fn2000_mp
+        //memcpy(extra_data, "coltanaconda_mp\0", 18);
+        CustomEventManager::PushCustomEvent(C_TYPE_DELAYED, C_EVENT_GIVE_WEAPON, INVALID_ID, id, 15, extra_data);
+        /*while (true)
+        {
+            std::string test;
+            char* new_weapon = static_cast<char*>(IW4::BG::GetWeaponDef(IW4::BG::GetViewmodelWeaponIndex(IW4::SV::GameClientNum(id))));
+            auto new_state = ConfigManager::ParseWeapon(new_weapon, test);
+            if (new_state == WEAPON_INVALID)
+            {
+                //WeaponManager::GiveWeapon(id, (char*)weapons_without_attachments.c_str(), 3, 30, 0, true);
+                WeaponManager::SelectWeapon(id, IW4::G::GetWeaponIndexForName("fn2000_mp"));
+                //continue;
+            }
+            else
+            {
+                break;
+            }
+            Sleep(100);
+        }*/
+        //WeaponManager::GiveWeapon(id, "riotshield_mp", 3, 30, 0, true);
+        /*while (true)
+        {
+            std::string test;
+            char* new_weapon = static_cast<char*>(IW4::BG::GetWeaponDef(IW4::BG::GetViewmodelWeaponIndex(IW4::SV::GameClientNum(id))));
+            auto new_state = ConfigManager::ParseWeapon(new_weapon, weapons_without_attachments);
+            if (new_state == WEAPON_INVALID)
+            {
+                WeaponManager::GiveWeapon(id, "fn2000_mp", 3, 30, 0, true);
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }*/
+        //WeaponManager::GiveWeapon(id, "usp_mp", 8, 30, 0, true);
+		//GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7your active weapon is ^1not^7 allowed and was ^2replaced^7!");
+    }
 		break;
 	case WEAPON_KILL:
 		CustomEventManager::PushCustomEvent(C_TYPE_DEFAULT, C_EVENT_PUNISH, 1, id, 0, static_cast<void*>(new punishment_wrapper(PUNISH_KILL)));
-		GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7your active weapon is ^1not^7 allowed and you were ^2killed^7!");
+		//GameManager::SendClientChatMessage(IW4::MISC::GetHostId(), id, "^7your active weapon is ^1not^7 allowed and you were ^2killed^7!");
 		break;
+    case WEAPON_INVALID:
+
+        break;
 	default:
 		break;
 	}

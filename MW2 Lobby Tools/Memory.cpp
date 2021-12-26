@@ -23,15 +23,71 @@ SOFTWARE.
 #include "stdafx.h"
 #include "Memory.h"
 
+// пропускаем проверку find best host и сразу запускаем игру
+void Memory::ToggleFostHost(bool state)
+{
+    if (state)
+    {
+        ToggleOpcodes(JZ, OJMP, reinterpret_cast<PVOID>(SKIP_FIND_BEST_HOST));
+        WriteOpCodes(JNZ, 1, reinterpret_cast<PVOID>(HOST_ALWAYS_UNREACH));
+        WriteOpCodes(0x0F, 1, reinterpret_cast<PVOID>(HOST_ALWAYS_UNREACH+1));
+    }
+    else
+    {
+        ToggleOpcodes(OJMP, JZ, reinterpret_cast<PVOID>(SKIP_FIND_BEST_HOST));
+        WriteOpCodes(NOP, 2, reinterpret_cast<PVOID>(HOST_ALWAYS_UNREACH));
+        //ToggleOpcodes(JZ, OJMP, reinterpret_cast<PVOID>(HOST_ALWAYS_UNREACH));
+    }
+}
+
+// играем на длс картах без купленного длс
+void Memory::PatchDlcMapCheck()
+{
+    printf("dlc maps patch applied\n");
+    WriteOpCodes(NOP, 2, reinterpret_cast<PVOID>(DLC_MAP_CHECK));
+}
+
+// не кикаем себя если сидим в наблюдателях
+// есть побочный эффект, после мачта(если ни разу не выбирали класс) попадаем в главное меню а не в текущий матч
+// надо патчить что-то еще
+void Memory::ToggleDisableSpectatorKick(bool state)
+{
+    if (state)
+    {
+        ToggleOpcodes(JZ, OJMP, reinterpret_cast<PVOID>(DISABLE_SPECTATOR_KICK));
+    }
+    else
+    {
+        ToggleOpcodes(OJMP, JZ, reinterpret_cast<PVOID>(DISABLE_SPECTATOR_KICK));
+    }
+}
+
+
+void Memory::DisableLobbyVac(bool state)
+{
+	if (state)
+	{
+		//ToggleOpcodes(JZ, OJMP, reinterpret_cast<PVOID>(INSECURE_LOBBY));
+		ToggleOpcodes(0x03, 0x01, reinterpret_cast<PVOID>(INSECURE_LOBBY+1));
+	}
+	else
+	{
+		ToggleOpcodes(0x01, 0x03, reinterpret_cast<PVOID>(INSECURE_LOBBY+1));
+	}
+}
+
 void Memory::ToggleChopperBoxes(bool state)
 {
-	// TODO FIX, nops work jump change not
-	/*Functions::ToggleOpcodes(JNZ, JZ, (PVOID)CHOPPER_ESP_1_a);
-	Functions::ToggleOpcodes(JZ, JMP, (PVOID)CHOPPER_ESP_2_a);
-	Functions::ToggleOpcodes(JZ, JMP, (PVOID)CHOPPER_ESP_3_a);*/
-	WriteOpCodes(NOP, 2, reinterpret_cast<PVOID>(CHOPPER_ESP_1_a));
-	WriteOpCodes(NOP, 2, reinterpret_cast<PVOID>(CHOPPER_ESP_2_a));
-	WriteOpCodes(NOP, 2, reinterpret_cast<PVOID>(CHOPPER_ESP_3_a));
+    if (state)
+    {
+	    // TODO FIX, nops work jump change not
+	    /*Functions::ToggleOpcodes(JNZ, JZ, (PVOID)CHOPPER_ESP_1_a);
+	    Functions::ToggleOpcodes(JZ, JMP, (PVOID)CHOPPER_ESP_2_a);
+	    Functions::ToggleOpcodes(JZ, JMP, (PVOID)CHOPPER_ESP_3_a);*/
+	    WriteOpCodes(NOP, 2, reinterpret_cast<PVOID>(CHOPPER_ESP_1_a));
+	    WriteOpCodes(NOP, 2, reinterpret_cast<PVOID>(CHOPPER_ESP_2_a));
+	    WriteOpCodes(NOP, 2, reinterpret_cast<PVOID>(CHOPPER_ESP_3_a));
+    }
 }
 
 void Memory::ToggleThermalVision(bool state)

@@ -44,7 +44,7 @@ public:
 
 	static void InitWeaponList();
 
-	static WEAPON_STATE ParseWeapon(std::string weapon);
+	static WEAPON_STATE ParseWeapon(std::string weapon, std::string&);
 
 	static void AddWeapon(std::string weapon, WEAPON_STATE state);
 	static WeaponConfig *GetWeapon(std::string weapon);
