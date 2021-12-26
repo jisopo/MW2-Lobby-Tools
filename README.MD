@@ -1,40 +1,54 @@
-# MW2 Lobby Tools by Scoud
+# Обновленная версия mw2lt от Scoudem до последней версии игры:
+* Исправлен 1 из видов RCE(joinParty)
+* Минимальное количество игроков для старта игры - 4(в коде менять через переменную MinPartyPlayersCount)
+* Пропатчены длс карты(можно играть на длс картах когда длс не куплены в стиме, нужно только откачать карты в папку с игрой)
+* Force host по умолчанию включен и не отключается(vac отключен только на собственном сервере, если зайти на другой сервер без force host то сразу прилетит vac бан)
 
-MW2 Lobby Tools (MW2LT) are a set of tools to enhance the MW2 lobby experience by giving power back to the host.
-Also, this was my first cpp project ever, so the code could be much much much better.
+# Дополнительно:
+* -> Отдельный звук включения/выключения.
+* -> Только для хоста ставим пинг в таблицу убийств
+* -> Только для хоста меняем fov
+* -> Для всех игроков ставим стандартный цвет убийств в чате(в левом нижнем углу цвета то фиолетовые, то красные, то еще какие. Ставим стандартные)
 
-## New version
-A rewritten version is available @ https://github.com/Scoudcorp/Ultimate
+# Cписок кнопок:
+* F1 - супер коробки(только ас130 и верт пулеметы в грузах, после включения изменения применяются только в следующей игре)
+* F2 - завершить игру(на экране появляется надпись 'host ended game' и игра заканчивается)
+* F3 - force start(сразу запустить игру из лобби)
+* F5 - бесконечный бег(для всех на сервере, какой первый навык у игрока не имеет значения. по умолчанию выключен)
+* F6 - Переключить максимальное количество игроков 6x6 или 9x9(применяется при создании новой игры)
+* F7 - auto host(после старта заходим в игру и сидим в зрителях. игры играются сами. можно включить и идти пить чай)
+* F9 - вид от 3 лица(для всех на сервере)
 
-## Features
-* **General**
-  * Console unlock
-  * Force host
-* **Lobby**
-  * Change map, gamemode and gamerules in public matches
-  * Force start the game
-  * Change intermission time
-  * Toggle between private and public match
-  * 18 players
-* **Admin**
-  * **Ingame menu**
-    * Change configurations
-    * Monitor clients
-    * Kick clients
-    * Tempban clients
-    * Punish clients
-  * **Enforcement**
-    * Replace/strip/kill weapons and attachments
-    * Replace/strip/kill perks
-* **Ingame**
-  * Killstreak notifications
-  * Deathstreak notifications
-  * 80fov mode
-* **DVAR**
-  * Patch `jump_height`, `bg_fallDamageMaxHeight` and `bg_fallDamageMinHeight`, `gravity`, `speed` so that you can be a sanic bunny again
+# В лобби на кнопки num переключение карт
 
-## Usage
-1. Compile (needs detours)
-2. Start the latest steam version of `Call of Duty: Modern Warfare 2 - Multiplayer` (v1.2.211).
-3. Inject the generated dll into `iw4mp.exe` using your favorite injector.
-4. Enjoy
+
+# Конфиг mw2lt.cfg лежит в %appdata%\mw2lt.cfg
+Находим нужное оружие и меняем параметры
+
+2 - Убрать модуль(например убираем gl - подствольник)
+
+3 - Заменить оружие целиком на fn2000
+
+
+Через чат можно выставить fov
+
+/fov 80-120
+
+Через чат можно посмотреть список активных клиентов
+
+/status 1-3
+
+Включить noclip
+
+/noclipon <player_id>
+
+Выключить noclip
+
+/noclipoff <player_id>
+
+
+Если на сервере включен вид от 3 лица, то игрок может выключить его только для себя через:
+
+/viewf - вид от 1 лица
+
+/viewt - вид от 3 лица
