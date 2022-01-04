@@ -143,17 +143,15 @@ void CurrentGameManager::ClientConnect(int id) const
 		IW4::MISC::SetClientDvar(id, "cg_hudChatPosition", "5 204");
 		IW4::MISC::SetClientDvar(id, "cg_hudChatIntermissionPosition", "5 110");
 		IW4::MISC::SetClientDvar(id, "cg_ScoresPing_MaxBars", "10");*/
-		//IW4::MISC::SetClientDvar(id, "cg_fov", "80");
-        //IW4::MISC::SetClientDvar(id, "cg_scoreboardpingtext", "1")
 
-        if (id == IW4::MISC::GetHostId())
+        /*if (id == IW4::MISC::GetHostId())
         {
 			// добавляем пинг в таблицу только для хоста
             IW4::MISC::SetClientDvar(id, "cg_scoreboardpingtext", "1");
 
 			IW4::MISC::SetClientDvar(id, "cg_fov", "80");
 			IW4::MISC::SetClientDvar(id, "cg_fovScale", "1");
-        }
+        }*/
 
 		// восстанавливаем двары чата на стандартные после модифицированных серверов
 		IW4::MISC::SetClientDvar(id, "cl_maxpackets", "100");
