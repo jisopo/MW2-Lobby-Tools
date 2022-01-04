@@ -105,6 +105,9 @@ Info_ValueForKey_0 oInfoValueForKey;
 typedef void(*Resume_fp)(unsigned int timeId);
 Resume_fp oResume;
 
+typedef void(*ClientCommand_fp)(int clientIndex, char* command);
+ClientCommand_fp oClientCommand;
+
 typedef void(*Say_fp)(gentity_t *from, gentity_t *to, int mode, const char *chatText);
 Say_fp oSay;
 
@@ -186,6 +189,11 @@ void HookNotify()
 void HookPlayerData()
 {
     
+}
+
+void HookClientCommand()
+{
+    oClientCommand = reinterpret_cast<ClientCommand_fp>(DetourFunction(reinterpret_cast<PBYTE>(0x00526280), reinterpret_cast<PBYTE>(mClientCommand)));
 }
 
 void HookResume()
@@ -621,6 +629,22 @@ __declspec(naked) void __cdecl mResume(unsigned int timeId)
     F_EPILOG(oResume);
 }
 
+void mClientCommand(int clientIndex, char* command)
+{
+    std::string cmd(command);
+
+    if (cmd.find("endround") != std::string::npos)
+    {
+        if (IW4::MISC::GetHostId() != clientIndex)
+        {
+            IW4::MISC::SendAllClientsChatMessage(clientIndex, "'host ended game' failed");
+            return;
+        }
+    }
+
+    oClientCommand(clientIndex, command);
+}
+
 void mRceFix(const char* localClientNum, const char* netadr_t_from, const char* msg_t_msg, const char* time, const char* arg5, const char* arg6)
 {
 	return oRceFix(localClientNum, netadr_t_from, msg_t_msg, time, arg5, arg6);
@@ -868,6 +892,7 @@ DWORD WINAPI CreateDetour(LPVOID lpvoid)
     MaxPlayersHook();
     MinPartyPlayers();
     HookSay();
+    HookClientCommand();
 
     Memory::PatchDlcMapCheck();
 
