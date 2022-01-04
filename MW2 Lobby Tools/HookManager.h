@@ -30,11 +30,8 @@ void mRefresh(int localClientNum);
 void mNotify(unsigned int notifyListOwnerId, unsigned int stringValue, VariableValue *top);
 int Info_ValueForKey(int a1, int a2, int a3, int a4);
 void mResume(unsigned int timeId);
-void mAddText(int localClientNum, const char *text);
+void mClientCommand(int clientIndex, char* command);
 void mSay(gentity_t *from, gentity_t *to, int mode, const char *chatText);
-void mDropClient(int clientNum, const char *reason);
-void mDropClient2(void *client_s, const char *reason, bool tellThem);
-void mComError(int errorParamT, const char* msg, bool tellThem);
 DWORD mGameStyles(int ScreenPlacement_scrPlace,
     int64_t x,
     int y,

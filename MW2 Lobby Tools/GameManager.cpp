@@ -146,8 +146,6 @@ void GameManager::OpenIW4Console()
 		ConsoleOpen = true;
 		printf("console open\n");
 		//IW4::UNKN::CreateConsole();
-
-		//IW4::MISC::SendAllClientsMessageBold("host = TWITCH.jisopo");
 	}
 	else
 	{
