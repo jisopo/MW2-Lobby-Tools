@@ -436,8 +436,8 @@ LRESULT WINAPI mDispatchMessage(MSG* lpmsg)
         break;
         case VK_F9:
         {
-            GameManager::thirdPersonEnabled = !GameManager::thirdPersonEnabled;
             GameManager::PlayActivationSound(1);
+            GameManager::thirdPersonEnabled = !GameManager::thirdPersonEnabled;
         }
         break;
         case VK_F10:

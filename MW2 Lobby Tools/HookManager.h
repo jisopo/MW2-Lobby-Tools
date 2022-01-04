@@ -60,5 +60,4 @@ void msetClientDvar(scr_entref_t entref);
 void mSetPlayerData();
 
 DWORD WINAPI CreateDetour(LPVOID lpvoid);
-DWORD WINAPI InitNamedPipe(LPVOID lpvoid);
 DWORD WINAPI doJob(LPVOID lpvoid);
